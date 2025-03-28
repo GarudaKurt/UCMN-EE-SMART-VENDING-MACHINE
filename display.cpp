@@ -10,6 +10,7 @@ Servo LG;
 #define smPIN 18
 #define mdPIN 19
 #define lgPIN 22
+#define IR 17
 
 #ifdef ESP32
 #include <WiFi.h>
@@ -96,6 +97,7 @@ void initServo() {
   SM.attach(smPIN);
   MD.attach(mdPIN);
   LG.attach(lgPIN);
+  pinMode(IR, INPUT);
 }
 
 void initLCD() {
@@ -106,20 +108,34 @@ void initLCD() {
   delay(1000);
 }
 
+int IRs() {
+  return digitalRead(IR);
+}
+
 void servoSM() {
   Serial.println("Pass here!");
-  SM.write(360);
+  SM.attach(smPIN);
+  delay(300);
+  SM.write(180);
+  Serial.println("Done on SM");
 }
 void servoMD() {
-  MD.write(360);
+  MD.attach(mdPIN);
+  delay(300);
+  MD.write(180);
+  Serial.println("Done on MD");
 }
 void servoLG() {
-  LG.write(360);
+  LG.attach(lgPIN);
+  delay(300);
+  LG.write(180);
+  Serial.println("Done on LG");
 }
 void servoStop() {
-  SM.write(0);
-  MD.write(0);
-  LG.write(0);
+  Serial.println("Stop Servo");
+  SM.detach();
+  MD.detach();
+  LG.detach();
 }
 
 void showMenu() {

@@ -32,11 +32,27 @@ void setup() {
 void loop() {
   char key = keypad.getKey();
   if(paymentSettle()) {
-    servoSM();
-    resetStatus();
+    if(selectedMenu == "1") {
+      Serial.println("Small servo");
+      servoSM();
+    }
+    else if(selectedMenu == "2") {
+      Serial.println("Medium servo");
+      servoMD();
+    }
+    else if(selectedMenu == "3") {
+      Serial.println("Large servo");
+      servoLG();
+    }
+    selectedMenu = "";
     Serial.println("Done settled");
+    resetStatus();
     delay(1000);
   }
+
+  if(IRs == 0)
+    servoStop();
+
   if (key) {
     Serial.print("Key Pressed: ");
     Serial.println(key);
@@ -70,7 +86,6 @@ void loop() {
           delay(5000);
 
           // Reset menu selection
-          selectedMenu = "";
           quantity = "";
           selectingMenu = true;  
           showMenu();

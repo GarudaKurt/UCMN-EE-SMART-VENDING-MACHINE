@@ -18,5 +18,6 @@ void servoSM();
 void servoMD();
 void servoLG();
 void initServo();
+int IRs();
 
 #endif
